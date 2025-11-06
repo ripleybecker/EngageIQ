@@ -2,6 +2,7 @@ import cv2
 import time
 from ultralytics import YOLO
 import numpy as np
+import json
 
 # Load YOLO model
 model = YOLO("yolo11n.pt")  # You can swap for yolo11s.pt if you want more accuracy
@@ -91,6 +92,9 @@ while True:
             duration = round(time.time() - pdata["start"], 1)
             zone_id = pdata["zone"]
             completed_durations[zone_id].append(duration)
+
+    with open("data.json", "w") as f:
+        json.dump(completed_durations, f)
 
     # --- Draw exhibit zones ---
     cv2.rectangle(frame, (ZONE_1[0], ZONE_1[1]), (ZONE_1[2], ZONE_1[3]), (255, 0, 0), 2)
